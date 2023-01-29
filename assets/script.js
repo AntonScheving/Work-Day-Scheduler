@@ -58,4 +58,41 @@
 
 
 */
+setInterval(function() {
+let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
+document.getElementById("currentDay").innerHTML = displayCurrentDay;
+}, 1000);
 
+// // $("#currentDay").text(displayCurrentDay);
+
+// // const displayCurrentDay = moment();
+// // $("#currentDay").text(today.format('Do MMMM YYYY, h:mm:ss a'));
+
+
+    
+// // }
+
+// document.getElementById("currentDay").innerHTML = displayCurrentDay;
+
+
+
+// function timeDisplay() {
+//     (function() { 
+//         let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
+    
+     
+//     // $("#currentDay").text(displayCurrentDay);
+    
+//     // const displayCurrentDay = moment();
+//     // $("#currentDay").text(today.format('Do MMMM YYYY, h:mm:ss a'));
+//     // setInterval(timeDisplay, 1000);
+    
+//     }, 1000);
+// }
+//     timeDisplay();
+// setInterval(function(){
+//     timeDisplay();
+// },1000);
+// // const time = timeDisplay()
+
+    
