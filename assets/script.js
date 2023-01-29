@@ -59,8 +59,13 @@ Done    - Display the current day at the top of
 
 
 */
+const inputFields = $('#input-fields');
+const inputText = $('#input-text');
 const timeSlotBlocks = $('#time-slot-blocks');
+
 const timeSlots = ["9am - 10am", "10am - 11am", "12am - 1pm", "1pm - 2pm", "2pm - 3pm", "3pm - 4pm", "4pm - 5pm"];
+
+const userInputValues = ["", "", ]
 
 setInterval(function() {
 let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
@@ -78,3 +83,29 @@ for (let i = 0; i < timeSlots.length; i++) {
 
     timeSlotBlocks.append(timeDivBlocks);
 }
+
+for (let i = 0; i < userInputValues.length; i++) {
+    userInput();
+    // Create a new `<div>` for each time
+    // let userInputBlocks = $('<form>');
+
+    // userInputBlocks.text(""[i]);
+
+    // userInputBlocks.addClass('col');
+
+    // inputText.append(userInputBlocks);
+}
+
+
+function userInput(event) {
+    event.preventDefault();
+    
+    const inputFields = $('input[name=planner-input').val();
+
+    if (!inputFields) {
+        console.log('No input from user in the timeslot');
+        return;
+    }
+
+}
+inputFields.on('click', userInput);
