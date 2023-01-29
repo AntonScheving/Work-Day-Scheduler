@@ -36,7 +36,8 @@
 - Write clear and concise pseudocode for each subtask, focusing on the input, output, and the main steps required
 - Test and refine the pseudocode as needed
 
-        - Display the current day at the top of the calender when a user opens the planner.
+Done    - Display the current day at the top of           
+          the calender when a user opens the planner.
                 - read the moment documentation
                 - add the link to moment in Javascript
                 - get the correct date format from moment
@@ -58,41 +59,22 @@
 
 
 */
+const timeSlotBlocks = $('#time-slot-blocks');
+const timeSlots = ["9am - 10am", "10am - 11am", "12am - 1pm", "1pm - 2pm", "2pm - 3pm", "3pm - 4pm", "4pm - 5pm"];
+
 setInterval(function() {
 let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
 document.getElementById("currentDay").innerHTML = displayCurrentDay;
 }, 1000);
 
-// // $("#currentDay").text(displayCurrentDay);
+  
+for (let i = 0; i < timeSlots.length; i++) {
+    // Create a new `<div>` for each time
+    let timeDivBlocks = $('<div>');
 
-// // const displayCurrentDay = moment();
-// // $("#currentDay").text(today.format('Do MMMM YYYY, h:mm:ss a'));
+    timeDivBlocks.text(timeSlots[i]);
 
+    timeDivBlocks.addClass('col');
 
-    
-// // }
-
-// document.getElementById("currentDay").innerHTML = displayCurrentDay;
-
-
-
-// function timeDisplay() {
-//     (function() { 
-//         let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
-    
-     
-//     // $("#currentDay").text(displayCurrentDay);
-    
-//     // const displayCurrentDay = moment();
-//     // $("#currentDay").text(today.format('Do MMMM YYYY, h:mm:ss a'));
-//     // setInterval(timeDisplay, 1000);
-    
-//     }, 1000);
-// }
-//     timeDisplay();
-// setInterval(function(){
-//     timeDisplay();
-// },1000);
-// // const time = timeDisplay()
-
-    
+    timeSlotBlocks.append(timeDivBlocks);
+}
