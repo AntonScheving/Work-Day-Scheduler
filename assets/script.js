@@ -59,13 +59,17 @@ Done    - Display the current day at the top of
 
 
 */
+
+
 const inputFields = $("#input-fields");
 const inputText = $("#input-text");
 const slotBlocks = $("#slot-blocks");
 
-const timeSlots = ["9am", "10am", "11am", "12am", "1pm", "2pm ", "3pm", "4pm", "5pm"];
+const userInputValue = document.querySelector("#user-input-value");
+// const saveButton = document.querySelector("#save-button");
+// const saveMessage = document.querySelector("#save-message");
 
-const userInputValues = ["", "", ]
+const timeSlots = ["9am", "10am", "11am", "12am", "1pm", "2pm ", "3pm", "4pm", "5pm"];
 
 setInterval(function() {
 let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
@@ -86,7 +90,7 @@ document.getElementById("currentDay").innerHTML = displayCurrentDay;
 
 for (let i = 0; i < timeSlots.length; i++) {
     // Create a new `<div>` for each time
-    let timeBlock = $("<div>").addClass("input-group input-group-lg");
+    let timeBlock = $("<div>li:odd").addClass("input-group input-group-lg");
 
     // Create the first `<div>` with the bootstrap time-slot-blocks 
     let inputGroupPrepend = $("<div>").addClass("input-group-prepend");
@@ -101,7 +105,9 @@ for (let i = 0; i < timeSlots.length; i++) {
         type: "text",
         class: "form-control",
         "aria-label": "Large",
-        "aria-describedby": "inputGroup-sizing-sm"
+        "aria-describedby": "inputGroup-sizing-sm",
+        id: "user-input-value",
+        name: "user-input-text"
     });
     timeBlock.append(userInput);
 
@@ -109,7 +115,8 @@ for (let i = 0; i < timeSlots.length; i++) {
     let inputGroupAppend = $("<div>").addClass("input-group-append");
     let saveButton = $("<button>").addClass("btn btn-outline-secondary")
         .attr({
-            type: "button"
+            type: "button",
+            id: "save-button"
         })
         .text("Save");
     inputGroupAppend.append(saveButton);
@@ -117,11 +124,44 @@ for (let i = 0; i < timeSlots.length; i++) {
 
     // Append the final `<div>` to the slotBlocks element
     slotBlocks.append(timeBlock);
+
+    let saveMessage = $("<div>").attr({
+        id: "save-message"
+    });
+};
+
+function displayMessage(type, message) {
+    const saveMessage = document.querySelector("#save-message");
+
+    saveMessage.textContent = message;
+    saveMessage.setAttribute("class", type);
+};
+
+function renderInput() {
+    let textInput = localStorage.getItem("user-input-text");
+
+    if (!textInput) {
+        return;
+    };
+
+
+};
+
+const saveButton = document.querySelector("#save-button");
+
+saveButton.addEventListener("click", function(event) {
+    event.preventDefault()
+    const textInput = document.querySelector("#user-input-value").value;
+
+    if (!textInput === "") {
+        displayMessage("Oops, nothing to save!");
+    } else {
+        displayMessage("success", "saved successfully")
+    
+   localStorage.setItem("user-input-text", textInput)
+   renderInput();
 }
-
-
-
-
+});
 
 
 
