@@ -59,11 +59,11 @@ Done    - Display the current day at the top of
 
 
 */
-const inputFields = $('#input-fields');
-const inputText = $('#input-text');
-const timeSlotBlocks = $('#time-slot-blocks');
+const inputFields = $("#input-fields");
+const inputText = $("#input-text");
+const slotBlocks = $("#slot-blocks");
 
-const timeSlots = ["9am - 10am", "10am - 11am", "12am - 1pm", "1pm - 2pm", "2pm - 3pm", "3pm - 4pm", "4pm - 5pm"];
+const timeSlots = ["9am", "10am", "11am", "12am", "1pm", "2pm ", "3pm", "4pm", "5pm"];
 
 const userInputValues = ["", "", ]
 
@@ -72,40 +72,86 @@ let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
 document.getElementById("currentDay").innerHTML = displayCurrentDay;
 }, 1000);
 
-  
+// for (let i = 0; i < timeSlots.length; i++) {
+//     // Create a new `<div>` for each time
+//     let timeBlocks = $("<div>");
+
+//     // timeBlocks.text(timeSlots[i]);
+
+//     timeBlocks.addClass("time-blocks");
+
+//     slotBlocks.append(timeBlocks);
+// }
+
+
 for (let i = 0; i < timeSlots.length; i++) {
     // Create a new `<div>` for each time
-    let timeDivBlocks = $('<div>');
+    let timeBlock = $("<div>").addClass("input-group input-group-lg");
 
-    timeDivBlocks.text(timeSlots[i]);
+    // Create the first `<div>` with the bootstrap time-slot-blocks 
+    let inputGroupPrepend = $("<div>").addClass("input-group-prepend");
+    let spanTag = $("<span>").addClass("input-group-text time-slot-blocks")
+        .attr("id", "inputGroup-sizing-lg")
+        .text(timeSlots[i]);
+    inputGroupPrepend.append(spanTag);
+    timeBlock.append(inputGroupPrepend);
 
-    timeDivBlocks.addClass('col');
+    // Create the user input element
+    let userInput = $("<input>").attr({
+        type: "text",
+        class: "form-control",
+        "aria-label": "Large",
+        "aria-describedby": "inputGroup-sizing-sm"
+    });
+    timeBlock.append(userInput);
 
-    timeSlotBlocks.append(timeDivBlocks);
+    // Create the last inner `<div>` with the button
+    let inputGroupAppend = $("<div>").addClass("input-group-append");
+    let saveButton = $("<button>").addClass("btn btn-outline-secondary")
+        .attr({
+            type: "button"
+        })
+        .text("Save");
+    inputGroupAppend.append(saveButton);
+    timeBlock.append(inputGroupAppend);
+
+    // Append the final `<div>` to the slotBlocks element
+    slotBlocks.append(timeBlock);
 }
 
-for (let i = 0; i < userInputValues.length; i++) {
-    userInput();
-    // Create a new `<div>` for each time
-    // let userInputBlocks = $('<form>');
-
-    // userInputBlocks.text(""[i]);
-
-    // userInputBlocks.addClass('col');
-
-    // inputText.append(userInputBlocks);
-}
 
 
-function userInput(event) {
-    event.preventDefault();
+
+
+
+
+
+
+//   This is to make multiple time blocks
+
+
+// for (let i = 0; i < userInputValues.length; i++) {
+//     userInput();
+//     // Create a new `<div>` for each time
+//     // let userInputBlocks = $("<form>");
+
+//     // userInputBlocks.text(""[i]);
+
+//     // userInputBlocks.addClass("col");
+
+//     // inputText.append(userInputBlocks);
+// }
+
+
+// function userInput(event) {
+//     event.preventDefault();
     
-    const inputFields = $('input[name=planner-input').val();
+//     const inputFields = $("input[name=planner-input").val();
 
-    if (!inputFields) {
-        console.log('No input from user in the timeslot');
-        return;
-    }
+//     if (!inputFields) {
+//         console.log("No input from user in the timeslot");
+//         return;
+//     }
 
-}
-inputFields.on('click', userInput);
+// }
+// inputFields.on("click", userInput);
