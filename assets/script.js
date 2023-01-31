@@ -134,6 +134,21 @@ for (let i = 0; i < timeSlots.length; i++) {
   saveButton.on("click", function () {
     // console.log(i);
     localStorage.setItem("hour-" + (i + 9), userInput.val());
+
+      if (userInput === "") {
+    displayMessage("error", "Oops, nothing to save!");
+    setTimeout(function() {
+        $(".error").hide();
+    }, 3000)
+  } else {
+    displayMessage("success", "saved successfully");
+    setTimeout(function() {
+        $(".success").hide();
+    }, 3000)
+    // localStorage.setItem("user-input-text", textInput);
+    renderInput();
+  }
+
   });
 
   list.append(userInput, saveButton);
@@ -147,7 +162,7 @@ for (let i = 0; i < timeSlots.length; i++) {
   let saveMessage = $("<div>").attr({
     id: "save-message",
   });
-  $("body").append(saveMessage);
+  $("#message-alert").prepend(saveMessage);
 }
 
 // $(function(){
@@ -175,19 +190,19 @@ function displayMessage(type, message) {
 
 const saveButton = document.querySelector("#save-button");
 
-saveButton.addEventListener("click", function (event) {
-  event.preventDefault();
-  const textInput = document.querySelector("#user-input-value").value;
+// saveButton.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   const textInput = document.querySelector("#user-input-value").value;
 
-  if (textInput === "") {
-    displayMessage("error", "Oops, nothing to save!");
-  } else {
-    displayMessage("success", "saved successfully");
+//   if (textInput === "") {
+//     displayMessage("error", "Oops, nothing to save!");
+//   } else {
+//     displayMessage("success", "saved successfully");
 
-    // localStorage.setItem("user-input-text", textInput);
-    renderInput();
-  }
-});
+//     // localStorage.setItem("user-input-text", textInput);
+//     renderInput();
+//   }
+// });
 
 function renderInput() {
     for (let i = 9; i < 18; i++) {
@@ -200,6 +215,34 @@ function renderInput() {
       $(".time-block").eq(i-9).children('input').val(textInput);
     }
   }
+
+//   function clearClick(){
+//     let deleteAllButton = $("<button>")
+//     .addClass("deleteBtn")
+//     .attr({
+//       type: "button",
+//       id: "delete-button",
+//     })
+//     .text("Delete All Data");
+//     localStorage.clear();
+//     deleteButton = 0;
+//     document.getElementById ("deleteBtn").innerHTML = deleteButton;
+// }
+
+function clearClick(){
+    let deleteAllButton = $("<button>")
+    .addClass("deleteBtn")
+    .attr({
+      type: "button",
+      id: "delete-button",
+    })
+    .text("Delete All Data")
+    .click(function(){
+      localStorage.clear();
+    });
+    $("#delete-button").append(deleteAllButton);
+  }
+  clearClick();
 
 // function renderInput() {
 //   let textInput = localStorage.getItem("user-input-text");
