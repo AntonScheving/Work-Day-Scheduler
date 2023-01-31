@@ -69,15 +69,15 @@ const list = $("#list");
 // const saveMessage = document.querySelector("#save-message");
 
 const timeSlots = [
-  "9am",
-  "10am",
-  "11am",
-  "12am",
-  "1pm",
-  "2pm ",
-  "3pm",
-  "4pm",
-  "5pm",
+  "9",
+  "10",
+  "11",
+  "12",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
 ];
 
 setInterval(function () {
@@ -135,19 +135,31 @@ for (let i = 0; i < timeSlots.length; i++) {
     // console.log(i);
     localStorage.setItem("hour-" + (i + 9), userInput.val());
 
-      if (userInput === "") {
-    displayMessage("error", "Oops, nothing to save!");
-    setTimeout(function() {
+    if (userInput.val() === "") {
+      displayMessage("error", "Oops, nothing to save!");
+      setTimeout(function () {
         $(".error").hide();
-    }, 3000)
-  } else {
-    displayMessage("success", "saved successfully");
-    setTimeout(function() {
+      }, 3000);
+    } else {
+      displayMessage("success", "saved successfully");
+      setTimeout(function () {
         $(".success").hide();
-    }, 3000)
-    // localStorage.setItem("user-input-text", textInput);
-    renderInput();
-  }
+      }, 3000);
+      // localStorage.setItem("user-input-text", textInput);
+      renderInput();
+    }
+
+    const now = (moment().format("h"));
+//     $(".time-blocks").html("time-blocks");
+// const presentHour = parseInt(moment().format("H"));
+
+    if (timeSlots < now) {
+      inputGroupPrepend.addClass("past");
+    } else if (timeSlots === now) {
+      inputGroupPrepend.addClass("present");
+    } else {
+      inputGroupPrepend.addClass("future");
+    }
 
   });
 
@@ -183,7 +195,7 @@ renderInput();
 
 function displayMessage(type, message) {
   const saveMessage = document.querySelector("#save-message");
-
+  alert(message);
   saveMessage.textContent = message;
   saveMessage.setAttribute("class", type);
 }
@@ -205,16 +217,19 @@ const saveButton = document.querySelector("#save-button");
 // });
 
 function renderInput() {
-    for (let i = 9; i < 18; i++) {
-      let textInput = localStorage.getItem("hour-" + (i));
-  
-      if (!textInput) {
-        continue;
-      }
-  
-      $(".time-block").eq(i-9).children('input').val(textInput);
+  for (let i = 9; i < 18; i++) {
+    let textInput = localStorage.getItem("hour-" + i);
+
+    if (!textInput) {
+      continue;
     }
+
+    $(".time-block")
+      .eq(i - 9)
+      .children("input")
+      .val(textInput);
   }
+}
 
 //   function clearClick(){
 //     let deleteAllButton = $("<button>")
@@ -229,20 +244,35 @@ function renderInput() {
 //     document.getElementById ("deleteBtn").innerHTML = deleteButton;
 // }
 
-function clearClick(){
-    let deleteAllButton = $("<button>")
+function clearClick() {
+  let deleteAllButton = $("<button>")
     .addClass("deleteBtn")
     .attr({
       type: "button",
       id: "delete-button",
     })
     .text("Delete All Data")
-    .click(function(){
+    .click(function () {
       localStorage.clear();
     });
-    $("#delete-button").append(deleteAllButton);
-  }
-  clearClick();
+  $("#delete-button").append(deleteAllButton);
+}
+clearClick();
+
+
+// $(".time-blocks").html("time-blocks");
+// const presentHour = parseInt(moment().format("H"));
+// Array.from({length: 24}).forEach((_, hour) => {
+//     let className = "past";
+//     if (hour < presentHour) {
+//         className = "present";
+//     } else if (hour === presentHour) {
+//         className = "future";
+//     }
+//     $(`#hour-${hour}`).addClass(className);
+// });
+
+
 
 // function renderInput() {
 //   let textInput = localStorage.getItem("user-input-text");
@@ -278,3 +308,5 @@ function clearClick(){
 
 // }
 // inputFields.on("click", userInput);
+
+
