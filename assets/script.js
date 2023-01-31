@@ -190,12 +190,24 @@ saveButton.addEventListener("click", function (event) {
 });
 
 function renderInput() {
-  let textInput = localStorage.getItem("user-input-text");
-
-  if (!textInput) {
-    return;
+    for (let i = 9; i < 18; i++) {
+      let textInput = localStorage.getItem("hour-" + (i));
+  
+      if (!textInput) {
+        continue;
+      }
+  
+      $(".time-block").eq(i-9).children('input').val(textInput);
+    }
   }
-}
+
+// function renderInput() {
+//   let textInput = localStorage.getItem("user-input-text");
+
+//   if (!textInput) {
+//     return;
+//   }
+// }
 
 //   This is to make multiple time blocks
 
