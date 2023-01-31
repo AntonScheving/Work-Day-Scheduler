@@ -1,4 +1,3 @@
-
 /*
 //Pseudocode Outline
 
@@ -60,20 +59,30 @@ Done    - Display the current day at the top of
 
 */
 
-
-const inputFields = $("#input-fields");
-const inputText = $("#input-text");
+// const inputFields = $("#input-fields");
+// const inputText = $("#input-text");
 const slotBlocks = $("#slot-blocks");
+const list = $("#list");
 
-const userInputValue = document.querySelector("#user-input-value");
+// const userInputValue = document.querySelector("#user-input-value");
 // const saveButton = document.querySelector("#save-button");
 // const saveMessage = document.querySelector("#save-message");
 
-const timeSlots = ["9am", "10am", "11am", "12am", "1pm", "2pm ", "3pm", "4pm", "5pm"];
+const timeSlots = [
+  "9am",
+  "10am",
+  "11am",
+  "12am",
+  "1pm",
+  "2pm ",
+  "3pm",
+  "4pm",
+  "5pm",
+];
 
-setInterval(function() {
-let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
-document.getElementById("currentDay").innerHTML = displayCurrentDay;
+setInterval(function () {
+  let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
+  document.getElementById("currentDay").innerHTML = displayCurrentDay;
 }, 1000);
 
 // for (let i = 0; i < timeSlots.length; i++) {
@@ -87,88 +96,108 @@ document.getElementById("currentDay").innerHTML = displayCurrentDay;
 //     slotBlocks.append(timeBlocks);
 // }
 
-
 for (let i = 0; i < timeSlots.length; i++) {
-    // Create a new `<div>` for each time
-    let timeBlock = $("<div>li:odd").addClass("input-group input-group-lg");
+  // Create a new `<div>` for each time
+  let timeBlock = $("<div>").addClass("input-group input-group-lg time-block");
 
-    // Create the first `<div>` with the bootstrap time-slot-blocks 
-    let inputGroupPrepend = $("<div>").addClass("input-group-prepend");
-    let spanTag = $("<span>").addClass("input-group-text time-slot-blocks")
-        .attr("id", "inputGroup-sizing-lg")
-        .text(timeSlots[i]);
-    inputGroupPrepend.append(spanTag);
-    timeBlock.append(inputGroupPrepend);
+  // Create the first `<div>` with the bootstrap time-slot-blocks
+  let inputGroupPrepend = $("<div>").addClass("input-group-prepend");
+  let spanTag = $("<span>")
+    .addClass("input-group-text time-slot-blocks")
+    .attr("id", "inputGroup-sizing-lg")
+    .text(timeSlots[i]);
+  inputGroupPrepend.append(spanTag);
+  timeBlock.append(inputGroupPrepend);
 
-    // Create the user input element
-    let userInput = $("<input>").attr({
-        type: "text",
-        class: "form-control",
-        "aria-label": "Large",
-        "aria-describedby": "inputGroup-sizing-sm",
-        id: "user-input-value",
-        name: "user-input-text"
-    });
-    timeBlock.append(userInput);
+  // Create the user input element
+  let userInput = $("<input>").attr({
+    type: "text",
+    class: "form-control description",
+    "aria-label": "Large",
+    "aria-describedby": "inputGroup-sizing-sm",
+    id: "user-input-value",
+    name: "user-input-text",
+  });
+  timeBlock.append(userInput);
 
-    // Create the last inner `<div>` with the button
-    let inputGroupAppend = $("<div>").addClass("input-group-append");
-    let saveButton = $("<button>").addClass("btn btn-outline-secondary")
-        .attr({
-            type: "button",
-            id: "save-button"
-        })
-        .text("Save");
-    inputGroupAppend.append(saveButton);
-    timeBlock.append(inputGroupAppend);
+  // Create the last inner `<div>` with the button
+  let inputGroupAppend = $("<div>").addClass("input-group-append");
+  let saveButton = $("<button>")
+    .addClass("btn btn-outline-secondary saveBtn")
+    .attr({
+      type: "button",
+      id: "save-button",
+    })
+    .text("Save");
 
-    // Append the final `<div>` to the slotBlocks element
-    slotBlocks.append(timeBlock);
+  // console.log(userInput, saveButton);
+  saveButton.on("click", function () {
+    // console.log(i);
+    localStorage.setItem("hour-" + (i + 9), userInput.val());
+  });
 
-    let saveMessage = $("<div>").attr({
-        id: "save-message"
-    });
-};
+  list.append(userInput, saveButton);
+
+  inputGroupAppend.append(saveButton);
+  timeBlock.append(inputGroupAppend);
+
+  // Append the final `<div>` to the slotBlocks element
+  slotBlocks.append(timeBlock);
+
+  let saveMessage = $("<div>").attr({
+    id: "save-message",
+  });
+  $("body").append(saveMessage);
+}
+
+// $(function(){
+//     renderInput();
+//  });
+
+// $(document).ready( function () {
+//     renderInput();
+//   });
+// ;
+$(document).ready(function () {
+  renderInput();
+});
+// $(document).ready(function () {
+// yourFunction();
+
+renderInput();
 
 function displayMessage(type, message) {
-    const saveMessage = document.querySelector("#save-message");
+  const saveMessage = document.querySelector("#save-message");
 
-    saveMessage.textContent = message;
-    saveMessage.setAttribute("class", type);
-};
-
-function renderInput() {
-    let textInput = localStorage.getItem("user-input-text");
-
-    if (!textInput) {
-        return;
-    };
-
-
-};
+  saveMessage.textContent = message;
+  saveMessage.setAttribute("class", type);
+}
 
 const saveButton = document.querySelector("#save-button");
 
-saveButton.addEventListener("click", function(event) {
-    event.preventDefault()
-    const textInput = document.querySelector("#user-input-value").value;
+saveButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  const textInput = document.querySelector("#user-input-value").value;
 
-    if (!textInput === "") {
-        displayMessage("Oops, nothing to save!");
-    } else {
-        displayMessage("success", "saved successfully")
-    
-   localStorage.setItem("user-input-text", textInput)
-   renderInput();
-}
+  if (textInput === "") {
+    displayMessage("error", "Oops, nothing to save!");
+  } else {
+    displayMessage("success", "saved successfully");
+
+    // localStorage.setItem("user-input-text", textInput);
+    renderInput();
+  }
 });
 
+function renderInput() {
+  let textInput = localStorage.getItem("user-input-text");
 
-
-
+  if (!textInput) {
+    return;
+  }
+}
 
 //   This is to make multiple time blocks
-
 
 // for (let i = 0; i < userInputValues.length; i++) {
 //     userInput();
@@ -182,10 +211,9 @@ saveButton.addEventListener("click", function(event) {
 //     // inputText.append(userInputBlocks);
 // }
 
-
 // function userInput(event) {
 //     event.preventDefault();
-    
+
 //     const inputFields = $("input[name=planner-input").val();
 
 //     if (!inputFields) {
