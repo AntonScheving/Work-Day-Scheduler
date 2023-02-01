@@ -1,100 +1,23 @@
-/*
-//Pseudocode Outline
 
-// 1. Define the problem and gather requirements
-- Understand the problem and the desired outcome
-- Identify any constraints or limitations
-- Gather any necessary information or data
-
-        - This app needs to allow the user to enter text into fields that correspond to the time of day.
-
-// 2. Break down the problem into smaller subproblems
-- Identify the main tasks or functions required to solve the problem
-- Break down each main task into smaller subtasks
-- Prioritize the subtasks based on importance or dependencies
-
-        - I need to understand date and time using moment.js
-        -dynamically update the styling of the timeblocks based o the time of day
-        - how to use local storage so the data entered is saved
-        -understand eventlisteners
-        - use either CSS or Javascript for styling
-        - Understand what Persist events between refreshes of a page means
-
-
-// 3. Design the overall structure of the program
-- Choose the appropriate data structures and algorithms to use
-- Decide on the program flow and the order of execution
-- Determine how the various functions and modules will interact
-
-        - I will use Javascript to make the app interactive
-        - I will use jquery
-        - I will use moment.js
-        - I will use Bootstrap
-
-// 4. Write the pseudocode for each subtask
-- Write clear and concise pseudocode for each subtask, focusing on the input, output, and the main steps required
-- Test and refine the pseudocode as needed
-
-Done    - Display the current day at the top of           
-          the calender when a user opens the planner.
-                - read the moment documentation
-                - add the link to moment in Javascript
-                - get the correct date format from moment
-                - find the correct place to addd the date display code.
-
-        - Present timeblocks for standard business hours when the user scrolls down.      
-                - can I use bootstrap to create the time blocks or jquery
-                - add the time to the time blocks
-                - Make the timeblocks change colour based on time of day (past - present & future)
-                
-        - Allow a user to enter an event when they click a timeblock
-                - add a user input option in the time blocks
-
-        - Save the event in local storage when the save button is clicked in that timeblock.
-                - add the user input data in local storage 
-
-        - Persist events between refreshes of a page
-                - Find out what this means
-
-
-*/
-
-// const inputFields = $("#input-fields");
-// const inputText = $("#input-text");
 const slotBlocks = $("#slot-blocks");
 const list = $("#list");
 
-// const userInputValue = document.querySelector("#user-input-value");
-// const saveButton = document.querySelector("#save-button");
-// const saveMessage = document.querySelector("#save-message");
-
 const timeSlots = [
-  "9",
-  "10",
-  "11",
-  "12",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
+  "9am",
+  "10am",
+  "11am",
+  "12am",
+  "1pm",
+  "2pm",
+  "3pm",
+  "4pm",
+  "5pm",
 ];
 
 setInterval(function () {
   let displayCurrentDay = moment().format("Do MMMM YYYY, <br><br> hh:mm:ss a");
   document.getElementById("currentDay").innerHTML = displayCurrentDay;
 }, 1000);
-
-// for (let i = 0; i < timeSlots.length; i++) {
-//     // Create a new `<div>` for each time
-//     let timeBlocks = $("<div>");
-
-//     // timeBlocks.text(timeSlots[i]);
-
-//     timeBlocks.addClass("time-blocks");
-
-//     slotBlocks.append(timeBlocks);
-// }
 
 for (let i = 0; i < timeSlots.length; i++) {
   // Create a new `<div>` for each time
@@ -145,17 +68,15 @@ for (let i = 0; i < timeSlots.length; i++) {
       setTimeout(function () {
         $(".success").hide();
       }, 3000);
-      // localStorage.setItem("user-input-text", textInput);
       renderInput();
     }
 
-    const now = (moment().format("h"));
-//     $(".time-blocks").html("time-blocks");
-// const presentHour = parseInt(moment().format("H"));
+    const now = (moment().format("ha"));
 
-    if (timeSlots < now) {
+
+    if (timeSlots[i] < now) {
       inputGroupPrepend.addClass("past");
-    } else if (timeSlots === now) {
+    } else if (timeSlots[i] === now) {
       inputGroupPrepend.addClass("present");
     } else {
       inputGroupPrepend.addClass("future");
@@ -177,19 +98,10 @@ for (let i = 0; i < timeSlots.length; i++) {
   $("#message-alert").prepend(saveMessage);
 }
 
-// $(function(){
-//     renderInput();
-//  });
-
-// $(document).ready( function () {
-//     renderInput();
-//   });
-// ;
 $(document).ready(function () {
   renderInput();
 });
-// $(document).ready(function () {
-// yourFunction();
+
 
 renderInput();
 
@@ -201,20 +113,6 @@ function displayMessage(type, message) {
 }
 
 const saveButton = document.querySelector("#save-button");
-
-// saveButton.addEventListener("click", function (event) {
-//   event.preventDefault();
-//   const textInput = document.querySelector("#user-input-value").value;
-
-//   if (textInput === "") {
-//     displayMessage("error", "Oops, nothing to save!");
-//   } else {
-//     displayMessage("success", "saved successfully");
-
-//     // localStorage.setItem("user-input-text", textInput);
-//     renderInput();
-//   }
-// });
 
 function renderInput() {
   for (let i = 9; i < 18; i++) {
@@ -231,18 +129,6 @@ function renderInput() {
   }
 }
 
-//   function clearClick(){
-//     let deleteAllButton = $("<button>")
-//     .addClass("deleteBtn")
-//     .attr({
-//       type: "button",
-//       id: "delete-button",
-//     })
-//     .text("Delete All Data");
-//     localStorage.clear();
-//     deleteButton = 0;
-//     document.getElementById ("deleteBtn").innerHTML = deleteButton;
-// }
 
 function clearClick() {
   let deleteAllButton = $("<button>")
@@ -258,55 +144,5 @@ function clearClick() {
   $("#delete-button").append(deleteAllButton);
 }
 clearClick();
-
-
-// $(".time-blocks").html("time-blocks");
-// const presentHour = parseInt(moment().format("H"));
-// Array.from({length: 24}).forEach((_, hour) => {
-//     let className = "past";
-//     if (hour < presentHour) {
-//         className = "present";
-//     } else if (hour === presentHour) {
-//         className = "future";
-//     }
-//     $(`#hour-${hour}`).addClass(className);
-// });
-
-
-
-// function renderInput() {
-//   let textInput = localStorage.getItem("user-input-text");
-
-//   if (!textInput) {
-//     return;
-//   }
-// }
-
-//   This is to make multiple time blocks
-
-// for (let i = 0; i < userInputValues.length; i++) {
-//     userInput();
-//     // Create a new `<div>` for each time
-//     // let userInputBlocks = $("<form>");
-
-//     // userInputBlocks.text(""[i]);
-
-//     // userInputBlocks.addClass("col");
-
-//     // inputText.append(userInputBlocks);
-// }
-
-// function userInput(event) {
-//     event.preventDefault();
-
-//     const inputFields = $("input[name=planner-input").val();
-
-//     if (!inputFields) {
-//         console.log("No input from user in the timeslot");
-//         return;
-//     }
-
-// }
-// inputFields.on("click", userInput);
 
 
