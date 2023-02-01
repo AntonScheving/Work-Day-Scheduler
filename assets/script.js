@@ -41,6 +41,17 @@ for (let i = 0; i < timeSlots.length; i++) {
     id: "user-input-value",
     name: "user-input-text",
   });
+
+  const now = (moment().format("H"));
+
+  if (timeSlots[i] < now) {
+      inputGroupPrepend.addClass("past");
+    } else if (timeSlots[i] === now) {
+      inputGroupPrepend.addClass("present");
+    } else {
+      inputGroupPrepend.addClass("future");
+    }
+
   timeBlock.append(userInput);
 
   // Create the last inner `<div>` with the button
@@ -71,16 +82,9 @@ for (let i = 0; i < timeSlots.length; i++) {
       renderInput();
     }
 
-    const now = (moment().format("ha"));
+    
 
 
-    if (timeSlots[i] < now) {
-      inputGroupPrepend.addClass("past");
-    } else if (timeSlots[i] === now) {
-      inputGroupPrepend.addClass("present");
-    } else {
-      inputGroupPrepend.addClass("future");
-    }
 
   });
 
