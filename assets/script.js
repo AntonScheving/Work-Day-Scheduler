@@ -1,4 +1,3 @@
-
 const slotBlocks = $("#slot-blocks");
 const list = $("#list");
 
@@ -26,7 +25,7 @@ for (let i = 0; i < timeSlots.length; i++) {
   // Create the first `<div>` with the bootstrap time-slot-blocks
   let inputGroupPrepend = $("<div>").addClass("input-group-prepend");
   let spanTag = $("<span>")
-    .addClass("input-group-text time-slot-blocks")
+    .addClass("input-group-text time-slot-blocks hour")
     .attr("id", "inputGroup-sizing-lg")
     .text(timeSlots[i]);
   inputGroupPrepend.append(spanTag);
@@ -42,15 +41,15 @@ for (let i = 0; i < timeSlots.length; i++) {
     name: "user-input-text",
   });
 
-  const now = (moment().format("H"));
+  const now = moment().format("H");
 
   if (timeSlots[i] < now) {
-      inputGroupPrepend.addClass("past");
-    } else if (timeSlots[i] === now) {
-      inputGroupPrepend.addClass("present");
-    } else {
-      inputGroupPrepend.addClass("future");
-    }
+    userInput.addClass("past");
+  } else if (timeSlots[i] === now) {
+    userInput.addClass("present");
+  } else {
+    userInput.addClass("future");
+  }
 
   timeBlock.append(userInput);
 
@@ -81,11 +80,6 @@ for (let i = 0; i < timeSlots.length; i++) {
       }, 3000);
       renderInput();
     }
-
-    
-
-
-
   });
 
   list.append(userInput, saveButton);
@@ -105,7 +99,6 @@ for (let i = 0; i < timeSlots.length; i++) {
 $(document).ready(function () {
   renderInput();
 });
-
 
 renderInput();
 
@@ -133,7 +126,6 @@ function renderInput() {
   }
 }
 
-
 function clearClick() {
   let deleteAllButton = $("<button>")
     .addClass("deleteBtn")
@@ -148,5 +140,3 @@ function clearClick() {
   $("#delete-button").append(deleteAllButton);
 }
 clearClick();
-
-
