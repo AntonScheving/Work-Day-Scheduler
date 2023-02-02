@@ -41,7 +41,8 @@ for (let i = 0; i < timeSlots.length; i++) {
     name: "user-input-text",
   });
 
-  const now = moment().format("H");
+  const now = moment().format("h");
+  console.log(now)
 
   if (timeSlots[i] < now) {
     userInput.addClass("past");
