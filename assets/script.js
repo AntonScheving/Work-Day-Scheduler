@@ -44,7 +44,7 @@ for (let i = 0; i < timeSlots.length; i++) {
   const now = moment().format("h");
   console.log(now)
 
-  if (timeSlots[i] < now) {
+  if (timeSlots[i] > now) {
     userInput.addClass("past");
   } else if (timeSlots[i] === now) {
     userInput.addClass("present");
